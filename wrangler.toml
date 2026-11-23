@@ -1,5 +1,5 @@
 name = "berekalja-varszallas-admin"
-main = "src/worker.js"
+main = "scr/worker.js"
 compatibility_date = "2026-11-23"
 
 [assets]
