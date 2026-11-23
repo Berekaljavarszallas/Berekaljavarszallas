@@ -1,0 +1,13 @@
+name = "icy-field-218c"
+main = "src/worker.js"
+compatibility_date = "2026-11-23"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*", "/admin"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "berekalja-admin"
+database_id = "IDE_KELL_A_CLOUDFLARE_D1_ADATBAZIS_ID"
