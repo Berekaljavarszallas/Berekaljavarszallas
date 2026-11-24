@@ -96,6 +96,8 @@ async function api(request, env) {
   }
   return json({error:"Nem található."},404);
 }
-export default { async fetch(request,env){ const url=new URL(request.url); if(url.pathname.startsWith("/api/")) return api(request,env); if(url.pathname==="/admin") return env.ASSETS.fetch(new Request(new URL("/admin.html",request.url),request)); return env.ASSETS.fetch(request); }};
+export default { async fetch(request,env){ const url=new URL(request.url); if(url.pathname.startsWith("/api/")) return api(request,env); if (url.pathname === "/admin" || url.pathname === "/admin/") {
+  return env.ASSETS.fetch(new Request(new URL("/admin.html", request.url).toString(), { method: "GET" }));
+} return env.ASSETS.fetch(request); }};
 
 
