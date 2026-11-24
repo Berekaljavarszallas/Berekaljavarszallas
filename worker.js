@@ -1,6 +1,6 @@
 const COOKIE = "berekalja_admin";
 const DEFAULT_CONTENT = {
-  heroTitle: "Ahol a pihenés\núj értelmet kap.",
+  heroTitle: "Ahol a pihenés új értelmet kap.",
   heroText: "Fedezd fel Diósgyőr hangulatát, a Bükk közelségét és a gondtalan kikapcsolódást a Berekalja Várszállás kényelmes szobáiban és apartmanjában.",
   heroImage: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=2000&q=85",
   roomsImage: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=85",
