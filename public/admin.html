@@ -1,8 +1,84 @@
 <!doctype html><html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Berekalja Várszállás – Kezelőfelület</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"><style>
 :root{--pine:#142c25;--gold:#c6a46b;--cream:#f4f0e7;--ink:#1d2823;--muted:#6c756e}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif}.top{background:var(--pine);color:#eee7d9;padding:22px max(5vw,18px);display:flex;justify-content:space-between;align-items:center}.brand{font:24px 'Playfair Display'}.sub{font-size:11px;letter-spacing:.18em;color:#d0b27b;text-transform:uppercase;margin-top:5px}.wrap{max-width:900px;margin:38px auto;padding:0 18px}.panel{background:#fffdf8;border:1px solid #e4ddcf;padding:28px;margin:18px 0;box-shadow:0 8px 28px #18271c0a}.panel h2{font:26px 'Playfair Display';color:var(--pine);margin:0 0 8px}.hint{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 22px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}label{display:block;font-size:12px;color:#59645c}input,textarea,select{display:block;width:100%;padding:12px;margin-top:7px;border:1px solid #d8d0c1;background:#fff;font:14px 'DM Sans';color:var(--ink)}textarea{min-height:85px;resize:vertical}.wide{grid-column:1/-1}button,.link{border:0;background:var(--pine);color:white;padding:13px 18px;font:600 12px 'DM Sans';letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block}button.gold{background:var(--gold);color:var(--pine)}button.secondary{background:#e9e4d8;color:var(--pine)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.status{font-size:13px;line-height:1.5;margin-top:14px;color:#47624e;min-height:20px}.hidden{display:none!important}.login{max-width:430px;margin:9vh auto}.small{font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px}.danger{color:#9b3c31}.preview{max-width:100%;max-height:130px;object-fit:cover;margin-top:8px;display:block}@media(max-width:650px){.grid{grid-template-columns:1fr}.wide{grid-column:1}.panel{padding:20px}.top{padding:18px}.brand{font-size:21px}}
-</style></head><body><header class="top"><div><div class="brand">Berekalja Várszállás</div><div class="sub">Tulajdonosi kezelőfelület</div></div><a class="link" href="/">Weboldal megnyitása ↗</a></header><main class="wrap"><section id="login" class="panel login"><h2>Belépés</h2><p class="hint">Ez a felület csak a szállás kezelőjének szól.</p><label>Admin jelszó<input id="password" type="password" autocomplete="current-password" placeholder="Jelszó"></label><div class="actions"><button id="loginBtn">Belépés</button></div><div id="loginStatus" class="status"></div></section>
+.gallery-section {
+  margin: 25px 0;
+  padding: 18px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+.gallery-section h2 {
+  margin-top: 0;
+}
+
+.gallery-upload {
+  display: block;
+  margin: 12px 0;
+  padding: 12px;
+  border: 2px dashed #aaa;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.gallery-photo {
+  position: relative;
+}
+
+.gallery-photo img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.gallery-photo button {
+  width: 100%;
+  margin-top: 5px;
+  padding: 7px;
+  background: #b42318;
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.gallery-count {
+  color: #666;
+  font-size: 13px;
+}</style></head><body><header class="top"><div><div class="brand">Berekalja Várszállás</div><div class="sub">Tulajdonosi kezelőfelület</div></div><a class="link" href="/">Weboldal megnyitása ↗</a></header><main class="wrap"><section id="login" class="panel login"><h2>Belépés</h2><p class="hint">Ez a felület csak a szállás kezelőjének szól.</p><label>Admin jelszó<input id="password" type="password" autocomplete="current-password" placeholder="Jelszó"></label><div class="actions"><button id="loginBtn">Belépés</button></div><div id="loginStatus" class="status"></div></section>
 <div id="app" class="hidden"><section class="panel"><h2>Weboldal tartalma</h2><p class="hint">Itt módosíthatod a főoldal szövegeit, képeit, elérhetőségeit és az árak megjelenítését. A képekhez nyilvánosan elérhető kép-URL szükséges.</p><div class="grid"><label class="wide">Főcím<textarea id="heroTitle"></textarea></label><label class="wide">Főoldali rövid leírás<textarea id="heroText"></textarea></label><label class="wide">Kezdőkép URL-je<input id="heroImage" type="url" placeholder="https://..."><img id="heroPreview" class="preview"></label><label>Szobák fotó URL-je<input id="roomsImage" type="url" placeholder="https://..."><img id="roomsPreview" class="preview"></label><label>Az apartman fotó URL-je<input id="apartmentImage" type="url" placeholder="https://..."><img id="apartmentPreview" class="preview"></label><label>Kisszobák ára (Ft)<input id="roomPriceAmount" type="number" min="0" step="500" placeholder="14000"></label><label>Kisszobák árazása<select id="roomPriceMode"><option value="room">Szobánként / éjszaka</option><option value="person">Személyenként / éjszaka</option></select></label><label>Apartman ára (Ft)<input id="apartmentPriceAmount" type="number" min="0" step="500" placeholder="22000"></label><label>Apartman árazása<select id="apartmentPriceMode"><option value="unit">Apartmanonként / éjszaka</option><option value="person">Személyenként / éjszaka</option></select></label><label class="wide">Egyedi ármegjelenítés (nem kötelező)<input id="roomPrice" placeholder="Üresen hagyva automatikusan jelenik meg"></label><label class="wide">Apartman egyedi ármegjelenítése (nem kötelező)<input id="apartmentPrice" placeholder="Üresen hagyva automatikusan jelenik meg"></label><label>Telefonszám<input id="phone"></label><label>E-mail cím<input id="email" type="email"></label></div><div class="actions"><button class="gold" id="saveContent">Módosítások mentése</button><button class="secondary" id="reloadContent">Visszatöltés</button></div><div id="contentStatus" class="status"></div></section>
-<section class="panel"><h2>Elérhetőség beállítása</h2><p class="hint">Állítsd be egy adott időszakra, hány szoba legyen szabad (0–6), illetve foglalható-e a külön apartman. A záró dátum is beleértendő. A Booking.comon, Airbnb-n vagy más oldalon érkező foglalásokat itt kézzel kell átvezetned.</p><div class="grid"><label>Kezdő dátum<input id="start" type="date"></label><label>Utolsó érintett dátum<input id="end" type="date"></label><label>Szabad szobák száma<select id="rooms"><option value="0">0 – egyik sem</option><option value="1">1 szoba</option><option value="2">2 szoba</option><option value="3">3 szoba</option><option value="4">4 szoba</option><option value="5">5 szoba</option><option value="6" selected>6 – mind szabad</option></select></label><label>Apartman<select id="apartment"><option value="1">Foglalható</option><option value="0">Nem foglalható</option></select></label></div><div class="actions"><button id="saveAvailability">Elérhetőség mentése</button></div><div id="availabilityStatus" class="status"></div><p class="small">A weboldal ajánlatkérő űrlapja tájékoztató jelleggel mutatja a beállított szabad kapacitást. A vendég ajánlatkérése nem automatikus, végleges foglalás.</p></section><div class="actions"><button class="secondary" id="logout">Kilépés</button></div></div></main><script>
+<section class="panel gallery-section">
+<h2>Szobák fotógalériája</h2>
+<p class="hint">Legfeljebb 10 fényképet tölthetsz fel a szobákról.</p>
+<label class="gallery-upload">
+Szobafotók kiválasztása
+<input id="roomsGalleryFiles" type="file" accept="image/*" multiple>
+</label>
+<div id="roomsGalleryCount" class="gallery-count">0 / 10 kép</div>
+<div id="roomsGallery" class="gallery-grid"></div>
+<button type="button" id="uploadRoomsGallery">Szobafotók feltöltése</button>
+<div id="roomsGalleryStatus" class="status"></div>
+</section>
+
+<section class="panel gallery-section">
+<h2>Apartman fotógalériája</h2>
+<p class="hint">Legfeljebb 10 fényképet tölthetsz fel az apartmanról.</p>
+<label class="gallery-upload">
+Apartmanfotók kiválasztása
+<input id="apartmentGalleryFiles" type="file" accept="image/*" multiple>
+</label>
+<div id="apartmentGalleryCount" class="gallery-count">0 / 10 kép</div>
+<div id="apartmentGallery" class="gallery-grid"></div>
+<button type="button" id="uploadApartmentGallery">Apartmanfotók feltöltése</button>
+<div id="apartmentGalleryStatus" class="status"></div>
+</section><section class="panel"><h2>Elérhetőség beállítása</h2><p class="hint">Állítsd be egy adott időszakra, hány szoba legyen szabad (0–6), illetve foglalható-e a külön apartman. A záró dátum is beleértendő. A Booking.comon, Airbnb-n vagy más oldalon érkező foglalásokat itt kézzel kell átvezetned.</p><div class="grid"><label>Kezdő dátum<input id="start" type="date"></label><label>Utolsó érintett dátum<input id="end" type="date"></label><label>Szabad szobák száma<select id="rooms"><option value="0">0 – egyik sem</option><option value="1">1 szoba</option><option value="2">2 szoba</option><option value="3">3 szoba</option><option value="4">4 szoba</option><option value="5">5 szoba</option><option value="6" selected>6 – mind szabad</option></select></label><label>Apartman<select id="apartment"><option value="1">Foglalható</option><option value="0">Nem foglalható</option></select></label></div><div class="actions"><button id="saveAvailability">Elérhetőség mentése</button></div><div id="availabilityStatus" class="status"></div><p class="small">A weboldal ajánlatkérő űrlapja tájékoztató jelleggel mutatja a beállított szabad kapacitást. A vendég ajánlatkérése nem automatikus, végleges foglalás.</p></section><div class="actions"><button class="secondary" id="logout">Kilépés</button></div></div></main><script>
 const $=id=>document.getElementById(id);const fields=['heroTitle','heroText','heroImage','roomsImage','apartmentImage','roomPrice','apartmentPrice','roomPriceAmount','roomPriceMode','apartmentPriceAmount','apartmentPriceMode','phone','email'];function status(id,msg,error=false){$(id).textContent=msg;$(id).className='status'+(error?' danger':'')}
 async function api(path,options={}){const r=await fetch(path,{...options,headers:{'content-type':'application/json',...(options.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'Hiba történt.');return d}
 async function load(){const d=await api('/api/admin/data');fields.forEach(k=>$(k).value=d.content[k]||'');preview();$('app').classList.remove('hidden');$('login').classList.add('hidden')}
@@ -11,6 +87,98 @@ $('loginBtn').onclick=async()=>{try{await api('/api/login',{method:'POST',body:J
 $('saveContent').onclick=async()=>{try{const content={};fields.forEach(k=>content[k]=$(k).value.trim());await api('/api/admin/content',{method:'POST',body:JSON.stringify(content)});status('contentStatus','Sikeresen elmentve. A módosítások megjelennek a weboldalon.')}catch(e){status('contentStatus',e.message,true)}};$('reloadContent').onclick=async()=>{try{await load();status('contentStatus','A mentett adatok betöltve.')}catch(e){status('contentStatus',e.message,true)}};
 $('saveAvailability').onclick=async()=>{try{if(!$('start').value||!$('end').value)throw new Error('Add meg mindkét dátumot.');const d=await api('/api/admin/availability',{method:'POST',body:JSON.stringify({start:$('start').value,end:$('end').value,rooms:Number($('rooms').value),apartment:Number($('apartment').value)})});status('availabilityStatus',`Elmentve: ${d.days} nap beállítása.`)}catch(e){status('availabilityStatus',e.message,true)}};
 $('logout').onclick=async()=>{try{await api('/api/logout',{method:'POST'})}finally{$('app').classList.add('hidden');$('login').classList.remove('hidden');$('password').value='';status('loginStatus','Kiléptél.')}};
-load().catch(()=>{});
+// FOTÓGALÉRIA KEZELÉSE
+async function loadGallery(category) {
+  const galleryId = category === 'rooms' ? 'roomsGallery' : 'apartmentGallery';
+  const countId = category === 'rooms' ? 'roomsGalleryCount' : 'apartmentGalleryCount';
+
+  try {
+    const data = await api('/api/admin/gallery?category=' + category);
+    const photos = data.photos || [];
+
+    $(countId).textContent = photos.length + ' / 10 kép';
+    $(galleryId).innerHTML = '';
+
+    photos.forEach(photo => {
+      const item = document.createElement('div');
+      item.className = 'gallery-photo';
+
+      const img = document.createElement('img');
+      img.src = photo.url;
+      img.alt = 'Feltöltött fénykép';
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.textContent = 'Törlés';
+      del.onclick = () => deleteGalleryPhoto(category, photo.key);
+
+      item.appendChild(img);
+      item.appendChild(del);
+      $(galleryId).appendChild(item);
+    });
+  } catch (e) {
+    status(category === 'rooms' ? 'roomsGalleryStatus' : 'apartmentGalleryStatus', e.message, true);
+  }
+}
+
+async function uploadGallery(category) {
+  const isRooms = category === 'rooms';
+  const input = $(isRooms ? 'roomsGalleryFiles' : 'apartmentGalleryFiles');
+  const statusId = isRooms ? 'roomsGalleryStatus' : 'apartmentGalleryStatus';
+  const files = Array.from(input.files);
+
+  if (!files.length) {
+    status(statusId, 'Először válassz ki fényképeket.', true);
+    return;
+  }
+
+  if (files.length > 10) {
+    status(statusId, 'Egyszerre legfeljebb 10 képet választhatsz ki.', true);
+    return;
+  }
+
+  const form = new FormData();
+  form.append('category', category);
+  files.forEach(file => form.append('images', file));
+
+  try {
+    status(statusId, 'Feltöltés folyamatban...');
+    const response = await fetch('/api/admin/gallery/upload', {
+      method: 'POST',
+      body: form
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Sikertelen feltöltés.');
+
+    input.value = '';
+    status(statusId, 'A fényképek feltöltése sikerült.');
+    await loadGallery(category);
+  } catch (e) {
+    status(statusId, e.message, true);
+  }
+}
+
+async function deleteGalleryPhoto(category, key) {
+  if (!confirm('Biztosan törlöd ezt a fényképet?')) return;
+
+  const statusId = category === 'rooms' ? 'roomsGalleryStatus' : 'apartmentGalleryStatus';
+
+  try {
+    await api('/api/admin/gallery/delete', {
+      method: 'POST',
+      body: JSON.stringify({ category, key })
+    });
+    status(statusId, 'A fénykép törölve.');
+    await loadGallery(category);
+  } catch (e) {
+    status(statusId, e.message, true);
+  }
+}
+
+$('uploadRoomsGallery').onclick = () => uploadGallery('rooms');
+$('uploadApartmentGallery').onclick = () => uploadGallery('apartment');
+
+loadGallery('rooms');
+loadGallery('apartment');load().catch(()=>{});
 </script></body></html>
 
