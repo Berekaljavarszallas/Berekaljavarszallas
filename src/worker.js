@@ -282,16 +282,16 @@ async function api(request, env) {
 
     if (diff !== 0) return json({ error: "Hibás jelszó." }, 401);
 
-    const token = await makeSession(env.SESSION_SECRET);
+const token = await makeSession(env.SESSION_SECRET);
 return json({ ok: true }, 200, {
   "set-cookie": ${COOKIE}=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=28800
 });
-  }
+}
 
-  if (path === "/api/logout" && request.method === "POST") {
-    return json({ ok: true }, 200, {
-      "set-cookie": ${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0
-    });
+if (path === "/api/logout" && request.method === "POST") {
+  return json({ ok: true }, 200, {
+    "set-cookie": ${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0
+  });
   }
 
   if (path.startsWith("/api/admin/")) {
