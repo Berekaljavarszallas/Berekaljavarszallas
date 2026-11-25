@@ -117,7 +117,9 @@ async function githubRequest(env, path, options = {}) {
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    if (response.status === 404) return null;
+   if (response.status === 404) {
+  throw new Error("GitHub 404 – Nem található az útvonal: " + path);
+}
     throw new Error(data.message || "GitHub hiba: " + response.status);
   }
 
