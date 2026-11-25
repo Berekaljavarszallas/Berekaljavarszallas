@@ -290,7 +290,7 @@ return json({ ok: true }, 200, {
 
 if (path === "/api/logout" && request.method === "POST") {
   return json({ ok: true }, 200, {
-    "set-cookie": ${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0
+    "set-cookie": `${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0`
   });
   }
 
